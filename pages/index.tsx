@@ -1,8 +1,6 @@
 import {useState } from 'react'
 import { Button, Group, Box, Title, Grid, NativeSelect, Header, Stack, Input } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons";
-import Trigger from './components/trigger';
-import Task from './components/task';
 import { postEvm} from './api/hello';
 
 export default function IndexPage() {
