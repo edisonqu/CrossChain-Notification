@@ -1,9 +1,8 @@
 import {useState } from 'react'
 import { Button, Group, Box, Title, Grid, NativeSelect, Header, Stack, Input } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons";
-import Trigger from './components/trigger';
-import Task from './components/task';
 import { postEvm} from './api/hello';
+import {postToIPFS} from "./utils/postToIPFS";
 
 export default function IndexPage() {
   const [chain, setChain] = useState(""); //On this chain
@@ -30,6 +29,9 @@ export default function IndexPage() {
 
   //if XMTP selected
   const [XMTPUsername, setXMTPUsername] = useState(""); //to here
+
+  //data to send back to the backend
+  let data;
 
   return (
     <Box style={{padding: "100px"}}>
@@ -124,9 +126,10 @@ export default function IndexPage() {
                
                 style={{marginTop: "20px" , width:"70%",  backgroundColor: "linear(to-l, #7928CA, #FF0080)" }}
                 
-                onClick={() => {
+                onClick={ () => {
                   {
-                    console.log({
+
+                    let data = ({
                       chain: chain,
                       triggerSelected: triggerSelected,
                       contractAddress: contractAddress,
@@ -137,6 +140,12 @@ export default function IndexPage() {
                       message: message,
                       XMTPUsername: XMTPUsername,
                     })
+
+                    const hash =  postToIPFS(data)
+                    console.log(hash)
+
+                    // console.log(data.chain)
+
                     postEvm({
                       chain: chain,
                       triggerSelected: triggerSelected,
