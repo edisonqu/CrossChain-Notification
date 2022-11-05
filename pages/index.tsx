@@ -33,7 +33,7 @@ export default function IndexPage() {
 
   return (
     <Box style={{padding: "100px"}}>
-      <Title>Cross Chain Notifications</Title>
+      <Title>Automate Notifications</Title>
       <Grid gutter={"md"} style={{ marginTop: "20px" }}>
         <Grid.Col span={4}>
           {/*  Menu item with a list of if */}
