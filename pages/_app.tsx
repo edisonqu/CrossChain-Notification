@@ -1,6 +1,8 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { Global, MantineProvider } from "@mantine/core";
+import { MoralisProvider } from "react-moralis";
+import {NotificationProvider} from "web3uikit";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -44,7 +46,13 @@ export default function App(props: AppProps) {
 
         }}
       >
-        <Component {...pageProps} />
+        <MoralisProvider initializeOnMount={false}>
+          <NotificationProvider>
+            <Component {...pageProps} />
+          </NotificationProvider>
+        </MoralisProvider>
+        
+        
       </MantineProvider>
     </>
   );

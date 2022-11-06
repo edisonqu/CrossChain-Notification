@@ -1,10 +1,22 @@
 import {useState } from 'react'
-import { Button, Group, Box, Title, Grid, NativeSelect, Header, Stack, Input, Paper } from "@mantine/core";
+import { ethers } from "ethers";
+import { useMoralis } from "react-moralis";
+import { Button, Group, Box, Title, Grid, NativeSelect, Header, Stack, Input, Paper, Navbar } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons";
 import { postEvm} from './api/hello';
 import {postToIPFS} from "./utils/postToIPFS";
+import NavBar from "./components/NavBar";
+import { ConnectButton } from "web3uikit"
+import { stringify } from 'querystring';
+
+declare var window: any
 
 export default function IndexPage() {
+
+  
+  onInit();
+
+
   const [chain, setChain] = useState(""); //On this chain
 
   //set trigger
@@ -32,14 +44,38 @@ export default function IndexPage() {
 
   //data to send back to the backend
   let data;
+  async function onInit() {
+        await window.ethereum.enable();
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+        console.log(account)
+         window.ethereum.on('accountsChanged', function (accounts: any[]) {
+            // Time to reload your interface with accounts[0]!
+            console.log(accounts[0])
+           });
+           setXMTPUsername(account);
+    }
+
 
   return (
+    <div>
+    
+    
     <Box style={{padding: "100px"}}>
+      
       <Title>Automate Notifications</Title>
       {/* text box that says "For example, On the Ethereum chain, when the price trigger at Contract Address A, Method ID B, and ABI C  hits price D, use XMTP to send the message 'price has been hit' to XMTP Username E */}
       <Paper style={{marginBottom: "20px", padding: "md", fontStyle: "italic" }}>
         <p>For example:
-          <br></br> On the Ethereum<span style={{color: "#64B5F6"}}> chain</span>, when the price <span style={{color: "#37d67a"}}> trigger </span>at <span style={{color: "#f47373"}}>Contract Address </span>A, <span style={{color: "#ba68c8"}}>Method ID </span>B, and <span style={{color: "#ffd300"}}>ABI</span> C <span style={{color: "#2d862e"}}>crosses</span> price D, <span style={{color: "#4a4a4a"}}>via </span>XMTP to send the <span style={{color: "#a1887f"}}>message</span> &apos;price has been hit&apos; to XMTP <span style={{color: "#d9e3f0", fontStyle: "bold"}}>Username</span> E</p>
+          <br></br> On the Ethereum<span style={{color: "#64B5F6"}}> chain</span>, 
+          when the price <span style={{color: "#37d67a"}}> trigger </span>at 
+          <span style={{color: "#f47373"}}> Contract Address </span>A, 
+          <span style={{color: "#ba68c8"}}> Method ID </span>B, and 
+          <span style={{color: "#ffd300"}}> ABI</span> C 
+          <span style={{color: "#2d862e"}}> crosses</span> price D, 
+          <span style={{color: "#4a4a4a"}}> via </span>XMTP to send the 
+          <span style={{color: "#a1887f"}}> message</span> &apos;price has been hit&apos; to your XMTP 
+          <span style={{color: "#d9e3f0", fontStyle: "bold"}}> Username (wallet) </span> </p>
 
         </Paper>
 
@@ -143,14 +179,16 @@ export default function IndexPage() {
         </Grid.Col>
         <Grid.Col span={4}>
           <Box style={{border: "2px solid #d9e3f0", padding: "20px"}}>
-          <label>... to this XMTP Username </label>
-          <Input style={{ marginTop: "0px" }} onChange={(event: any) => setXMTPUsername(event.currentTarget.value)} placeholder="XMTP Username" />
+          <label>... to my XMTP Username (connect your wallet) </label>
+          <ConnectButton />
+    
         </Box>  
         </Grid.Col>
 
                 
       </Grid>
       )}
+
 
       {message && XMTPUsername && (
               <Button
@@ -175,7 +213,7 @@ export default function IndexPage() {
                     const hash =  postToIPFS(data)
                     console.log(hash)
 
-                    // console.log(data.chain)
+                    console.log(XMTPUsername)
 
                     postEvm({
                       chain: chain,
@@ -197,5 +235,6 @@ export default function IndexPage() {
 
       
     </Box>
+    </div>
   );
 }
