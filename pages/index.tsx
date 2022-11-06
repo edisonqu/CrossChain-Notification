@@ -80,16 +80,6 @@ export default function IndexPage() {
           <span style={{color: "#4a4a4a"}}> via </span>XMTP, send the 
           <span style={{color: "#a1887f"}}> message</span> &apos;price has been hit&apos; to your XMTP 
           <span style={{color: "#d9e3f0", fontStyle: "bold"}}> Username (wallet) </span> </p>
-          <p>
-             On the Ethereum<span style={{color: "#64B5F6"}}> chain</span>, 
-          when the price <span style={{color: "#37d67a"}}> trigger </span>at 
-          <span style={{color: "#f47373"}}> Contract Address </span>A, 
-          <span style={{color: "#ba68c8"}}> Method ID </span>B, and 
-          <span style={{color: "#ffd300"}}> ABI</span> C 
-          <span style={{color: "#2d862e"}}> crosses</span> price D, 
-          <span style={{color: "#4a4a4a"}}> via </span>XMTP, send the 
-          <span style={{color: "#a1887f"}}> message</span> &apos;price has been hit&apos; to your XMTP 
-          <span style={{color: "#d9e3f0", fontStyle: "bold"}}> Username (wallet) </span> </p>
 
         </Paper>
 
@@ -102,7 +92,7 @@ export default function IndexPage() {
                 <NativeSelect
             label="On this chain..."
             placeholder="Select Chain"
-            data={['Ethereum', 'Polygon']}
+            data={['Ethereum', 'Polygon', 'Optimism']}
             value={chain}
             onChange={(event) => setChain(event.currentTarget.value)}
             rightSection={<IconChevronDown size={14} />}
@@ -236,7 +226,7 @@ export default function IndexPage() {
                       XMTPUsername: XMTPUsername,
                     })
                     
-                    const isSent = sendMessage("Hello World","0xBEf18A02B0fdB99bCA41F37e19DE97F5802f962c")
+                    const isSent = sendMessage(data.message,"0xBEf18A02B0fdB99bCA41F37e19DE97F5802f962c")
 
                     
 
