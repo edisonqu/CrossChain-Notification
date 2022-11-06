@@ -8,6 +8,7 @@ import {postToIPFS} from "./utils/postToIPFS";
 import NavBar from "./components/NavBar";
 import { ConnectButton } from "web3uikit"
 import { stringify } from 'querystring';
+import {sendMessage} from './utils/sendMessage';
 
 declare var window: any
 
@@ -42,6 +43,9 @@ export default function IndexPage() {
   //if XMTP selected
   const [XMTPUsername, setXMTPUsername] = useState(""); //to here
 
+  //if API selected
+  const [APIEndpoint, setAPIEndpoint] = useState(""); //to here
+
   //data to send back to the backend
   let data;
   async function onInit() {
@@ -63,11 +67,21 @@ export default function IndexPage() {
     
     <Box style={{padding: "100px"}}>
       
-      <Title>Automate Notifications</Title>
+      <Title>Relay: Automate On-Chain Notifications</Title>
       {/* text box that says "For example, On the Ethereum chain, when the price trigger at Contract Address A, Method ID B, and ABI C  hits price D, use XMTP to send the message 'price has been hit' to XMTP Username E */}
       <Paper style={{marginBottom: "20px", padding: "md", fontStyle: "italic" }}>
         <p>For example:
           <br></br> On the Ethereum<span style={{color: "#64B5F6"}}> chain</span>, 
+          when the price <span style={{color: "#37d67a"}}> trigger </span>at 
+          <span style={{color: "#f47373"}}> Contract Address </span>A, 
+          <span style={{color: "#ba68c8"}}> Method ID </span>B, and 
+          <span style={{color: "#ffd300"}}> ABI</span> C 
+          <span style={{color: "#2d862e"}}> crosses</span> price D, 
+          <span style={{color: "#4a4a4a"}}> via </span>XMTP, send the 
+          <span style={{color: "#a1887f"}}> message</span> &apos;price has been hit&apos; to your XMTP 
+          <span style={{color: "#d9e3f0", fontStyle: "bold"}}> Username (wallet) </span> </p>
+          <p>
+             On the Ethereum<span style={{color: "#64B5F6"}}> chain</span>, 
           when the price <span style={{color: "#37d67a"}}> trigger </span>at 
           <span style={{color: "#f47373"}}> Contract Address </span>A, 
           <span style={{color: "#ba68c8"}}> Method ID </span>B, and 
@@ -156,7 +170,7 @@ export default function IndexPage() {
           <NativeSelect
             label="... via ..."
             placeholder="Select Action Type"
-            data={['XMTP']}
+            data={['XMTP', 'API Endpoint']}
             value={actionSelected}
             onChange={(event) => setActionSelected(event.currentTarget.value)}
             rightSection={<IconChevronDown size={14} />}
@@ -189,8 +203,20 @@ export default function IndexPage() {
       </Grid>
       )}
 
+      {/* set Action Selected */}
+      {actionSelected == "API Endpoint" && (<Grid gutter={"md"} style={{ marginTop: "20px" }}>
 
-      {message && XMTPUsername && (
+        <Grid.Col span={4}>
+          <Box style={{border: "2px solid #a1887f", padding: "20px"}}>
+          <label>... get notified at this API Endpoint. </label>
+          <Input style={{ marginTop: "0px" }} onChange={(event: any) => setAPIEndpoint(event.currentTarget.value)} placeholder="API Endpoint" />
+          </Box>
+        </Grid.Col>
+      </Grid>
+      )}
+
+
+      {message && (XMTPUsername || APIEndpoint) && (
               <Button
                
                 style={{marginTop: "20px" , width:"70%",  backgroundColor: "linear(to-l, #7928CA, #FF0080)" }}
@@ -209,9 +235,10 @@ export default function IndexPage() {
                       message: message,
                       XMTPUsername: XMTPUsername,
                     })
+                    
+                    const isSent = sendMessage("Hello World","0xBEf18A02B0fdB99bCA41F37e19DE97F5802f962c")
 
-                    const hash =  postToIPFS(data)
-                    console.log(hash)
+                    
 
                     console.log(XMTPUsername)
 
