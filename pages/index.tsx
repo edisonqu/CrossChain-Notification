@@ -73,7 +73,7 @@ export default function IndexPage() {
           <span style={{color: "#ba68c8"}}> Method ID </span>B, and 
           <span style={{color: "#ffd300"}}> ABI</span> C 
           <span style={{color: "#2d862e"}}> crosses</span> price D, 
-          <span style={{color: "#4a4a4a"}}> via </span>XMTP to send the 
+          <span style={{color: "#4a4a4a"}}> via </span>XMTP, send the 
           <span style={{color: "#a1887f"}}> message</span> &apos;price has been hit&apos; to your XMTP 
           <span style={{color: "#d9e3f0", fontStyle: "bold"}}> Username (wallet) </span> </p>
 
