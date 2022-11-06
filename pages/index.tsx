@@ -39,7 +39,7 @@ export default function IndexPage() {
       {/* text box that says "For example, On the Ethereum chain, when the price trigger at Contract Address A, Method ID B, and ABI C  hits price D, use XMTP to send the message 'price has been hit' to XMTP Username E */}
       <Paper style={{marginBottom: "20px", padding: "md", fontStyle: "italic" }}>
         <p>For example:
-          <br></br> On the Ethereum<span style={{color: "#64B5F6"}}> chain</span>, when the price <span style={{color: "#37d67a"}}> trigger </span>at <span style={{color: "#f47373"}}>Contract Address </span>A, <span style={{color: "#ba68c8"}}>Method ID </span>B, and <span style={{color: "#ffd300"}}>ABI</span> C <span style={{color: "#2d862e"}}>crosses</span> price D, <span style={{color: "#4a4a4a"}}>via </span>XMTP to send the message &apos;price has been hit&apos; to XMTP Username E</p>
+          <br></br> On the Ethereum<span style={{color: "#64B5F6"}}> chain</span>, when the price <span style={{color: "#37d67a"}}> trigger </span>at <span style={{color: "#f47373"}}>Contract Address </span>A, <span style={{color: "#ba68c8"}}>Method ID </span>B, and <span style={{color: "#ffd300"}}>ABI</span> C <span style={{color: "#2d862e"}}>crosses</span> price D, <span style={{color: "#4a4a4a"}}>via </span>XMTP to send the <span style={{color: "#a1887f"}}>message</span> &apos;price has been hit&apos; to XMTP <span style={{color: "#d9e3f0", fontStyle: "bold"}}>Username</span> E</p>
 
         </Paper>
 
@@ -80,6 +80,8 @@ export default function IndexPage() {
           />
           </Box>
         </Grid.Col>
+        
+        
         <Grid.Col span={4}>
           <Box style={{border: "2px solid #f47373", padding: "20px"}}>
           <label>... at this contract address ... </label>
@@ -93,21 +95,21 @@ export default function IndexPage() {
           </Box>
         </Grid.Col>
 
-
         <Grid.Col span={4}>
           <Box style={{border: "2px solid #ffd300", padding: "20px"}}>
           <label>... with this ABI ... </label>
           <Input style={{ marginTop: "0px" }} onChange={(event: any) => setContractABI(event.currentTarget.value)} placeholder="ABI" />
           </Box>
         </Grid.Col>
-
         <Grid.Col span={4}>
           <Box style={{border: "2px solid #2d862e", padding: "20px"}}>
           <label>... crosses this value ... </label>
           <Input style={{ marginTop: "0px" }} onChange={(event: any) => setTriggerLevel(event.currentTarget.value)} placeholder="Value" />
           </Box>
         </Grid.Col>
+
       </Grid>
+      
       )}
 
       {/* set Action Selected */}
@@ -140,8 +142,10 @@ export default function IndexPage() {
           </Box>
         </Grid.Col>
         <Grid.Col span={4}>
+          <Box style={{border: "2px solid #d9e3f0", padding: "20px"}}>
           <label>... to this XMTP Username </label>
           <Input style={{ marginTop: "0px" }} onChange={(event: any) => setXMTPUsername(event.currentTarget.value)} placeholder="XMTP Username" />
+        </Box>  
         </Grid.Col>
 
                 
